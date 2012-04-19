@@ -9,6 +9,6 @@ class Input(Field):
         if self.value:
             r.extend([' value="', self.escape(self.value), '"'])
         r.append(' />')
-        return ''.join(r)
+        return self.renderer(self, ''.join(r))
 
 

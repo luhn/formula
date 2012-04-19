@@ -1,5 +1,7 @@
 from formula import Form
 from formula.fields import Text
+from formula.validators import Required
+from formula.exceptions import Invalid
 
 #Create a basic form
 f = Form('my_form')
@@ -14,5 +16,14 @@ post = {
     'text2': 'More text'
     }
 f.values(post)
+
+print f()
+
+#Add some validators
+f['text'].validators(Required())
+try:
+    f.validate({ 'text': '' })
+except Invalid:
+    pass
 
 print f()

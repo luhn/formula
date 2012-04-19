@@ -7,7 +7,12 @@ setup(
     description='',
     author='Theron Luhn',
     author_email='theron@luhn.com',
-    packages=['formula', 'formula.fields', 'formula.test'],
+    packages=[
+        'formula',
+        'formula.fields',
+        'formula.validators',
+        'formula.test'
+        ],
     requires=[
     ],
     )
