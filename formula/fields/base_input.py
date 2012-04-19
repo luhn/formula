@@ -5,7 +5,9 @@ class Input(Field):
         """Render the <input> tag."""
         r = ['<input type="', self.type, '"']
         if self.placeholder:
-            r.extend([' placeholder="', self.placeholder, '"'])
+            r.extend([' placeholder="', self.escape(self.placeholder), '"'])
+        if self.value:
+            r.extend([' value="', self.escape(self.value), '"'])
         r.append(' />')
         return ''.join(r)
 
