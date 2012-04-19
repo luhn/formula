@@ -1,5 +1,5 @@
 
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name='formula',
@@ -7,7 +7,7 @@ setup(
     description='',
     author='Theron Luhn',
     author_email='theron@luhn.com',
-    packages=find_packages(),
+    packages=['formula', 'formula.fields', 'formula.test'],
     requires=[
     ],
     )
