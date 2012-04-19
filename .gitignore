@@ -1,0 +1,32 @@
+*.swp
+*.swo
+
+.DS_Store
+
+
+#######
+# .gitignore for Python developers
+# Taken from
+# http://opensourcehacker.com/2010/07/23/gitignore-for-python-developers/
+#######
+*.mo
+*.egg-info
+*.egg
+*.EGG
+*.EGG-INFO
+bin
+build
+develop-eggs
+downloads
+eggs
+fake-eggs
+parts
+dist
+.installed.cfg
+.mr.developer.cfg
+.hg
+.bzr
+.svn
+*.pyc
+*.pyo
+*.tmp*
