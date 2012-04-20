@@ -1,6 +1,6 @@
 from formula import Form
 from formula.fields import Text
-from formula.validators import Required
+from formula.validators import Required, Natural
 from formula.exceptions import Invalid
 
 #Create a basic form
@@ -20,9 +20,9 @@ f.values(post)
 print f()
 
 #Add some validators
-f['text'].validators(Required())
+f['text'].validators(Required(), Natural(zero=False))
 try:
-    f.validate({ 'text': '' })
+    f.validate({ 'text': '0' })
 except Invalid:
     pass
 

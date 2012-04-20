@@ -25,7 +25,9 @@ class Field(object):
         erred = False
         for v in self._validators:
             try:
-                v(value)
+                new = v(self.value)
+                if new:
+                    self.value = new
             except Invalid as e:
                 erred = True
                 self.errors.append(str(e))

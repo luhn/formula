@@ -7,7 +7,7 @@ class Input(Field):
         if self.placeholder:
             r.extend([' placeholder="', self.escape(self.placeholder), '"'])
         if self.value:
-            r.extend([' value="', self.escape(self.value), '"'])
+            r.extend([' value="', self.escape(str(self.value)), '"'])
         r.append(' />')
         return self.renderer(self, ''.join(r))
 
