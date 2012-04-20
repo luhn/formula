@@ -3,7 +3,7 @@ from field import Field
 class Input(Field):
     def __html__(self):
         """Render the <input> tag."""
-        r = ['<input type="', self.type, '"']
+        r = ['<input type="', self.type, '" name="', self.name, '"']
         if self.placeholder:
             r.extend([' placeholder="', self.escape(self.placeholder), '"'])
         if self.value:

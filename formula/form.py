@@ -4,9 +4,9 @@ from renderers import twitter_bootstrap
 class Form(object):
     """An object that stores all the fields of the form."""
 
-    fields = {}
-
     def __init__(self, name, renderer = None):
+        self.fields = {}
+        self.ordered_fields = []
         self.name = name
         if renderer == None:
             renderer = twitter_bootstrap
@@ -19,6 +19,7 @@ class Form(object):
             field.renderer = self.renderer
         field.parent_name = self.name
         self.fields[name] = field
+        self.ordered_fields.append(field)
 
     def values(self, values):
         """Set and validate all submitted form data."""
@@ -30,6 +31,8 @@ class Form(object):
         for key in values:
             try:
                 self[key].validate(values[key])
+            except KeyError:
+                pass
             except Invalid:
                 erred = True
 
@@ -44,9 +47,8 @@ class Form(object):
     def __call__(self):
         """Render all the fields."""
         fields = []
-        for name in self.fields:
-            field = self[name].__html__()
-            fields.append(field)
+        for field in self.ordered_fields:
+            fields.append(field.__html__())
         return ''.join(fields)
 
     def __html__(self):
