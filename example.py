@@ -1,6 +1,7 @@
 from formula import Form
 from formula.fields import Text
 from formula.rules import Required, Natural
+from formula.filters import Trim
 from formula.exceptions import Invalid
 
 #Create a basic form
@@ -21,8 +22,9 @@ print f()
 
 #Add some validators
 f['text'].rules(Required(), Natural(zero=False))
+f['text'].filters(Trim())
 try:
-    f.validate({ 'text': '0' })
+    f.validate({ 'text': ' 0 ' })
 except Invalid:
     pass
 

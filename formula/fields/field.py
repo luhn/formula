@@ -10,6 +10,7 @@ class Field(object):
         self.value = value
         self.renderer = renderer
         self._rules = []
+        self._filters = []
         self.errors = []
         self.parent_name = None
 
@@ -17,10 +18,17 @@ class Field(object):
         """Set some validators."""
         self._rules.extend(args)
 
+    def filters(self, *args):
+        """Similar to rules, except filters are always run first."""
+        self._filters.extend(args)
 
     def validate(self, value):
         """Run the value through all the validators."""
         self.value = value
+
+        for f in self._filters:
+            self.value = f(self.value)
+
         erred = False
         for rule in self._rules:
             try:
