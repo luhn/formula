@@ -17,10 +17,12 @@ class Field(object):
     def rules(self, *args):
         """Set some validators."""
         self._rules.extend(args)
+        return self
 
     def filters(self, *args):
         """Similar to rules, except filters are always run first."""
         self._filters.extend(args)
+        return self
 
     def validate(self, value):
         """Run the value through all the validators."""
