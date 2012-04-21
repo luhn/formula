@@ -1,6 +1,6 @@
 
 
-def twitter_bootstrap(field, html):
+def twitter_bootstrap_renderer(field, html):
     """Render a single field."""
     r = ['<div class="control-group']
     if field.errors:

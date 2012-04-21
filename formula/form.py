@@ -1,5 +1,5 @@
 from exceptions import Invalid
-from renderers import twitter_bootstrap
+from renderers import basic_renderer
 
 class Form(object):
     """An object that stores all the fields of the form."""
@@ -9,7 +9,7 @@ class Form(object):
         self.ordered_fields = []
         self.name = name
         if renderer == None:
-            renderer = twitter_bootstrap
+            renderer = basic_renderer
         self.renderer = renderer
 
     def add(self, field):
