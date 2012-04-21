@@ -1,7 +1,7 @@
-from validator import Validator
+from rule import Rule
 from formula.exceptions import Invalid
 
-class Natural(Validator):
+class Natural(Rule):
     msg = 'You must enter a whole number'
 
     def __init__(self, msg=None, zero=True):

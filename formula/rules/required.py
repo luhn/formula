@@ -1,7 +1,7 @@
-from validator import Validator
+from rule import Rule
 from formula.exceptions import Invalid
 
-class Required(Validator):
+class Required(Rule):
     msg = 'This field is required.'
 
     def __call__(self, value):

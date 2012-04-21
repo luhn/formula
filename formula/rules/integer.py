@@ -1,12 +1,12 @@
-from validator import Validator
+from rule import Rule
 from formula.exceptions import Invalid
 
-class Numeric(Validator):
-    msg = 'You must enter a number.'
+class Integer(Rule):
+    msg = 'You must enter a whole number.'
 
     def __call__(self, value):
         if value:
             try:
-                return float(value)
+                return int(value)
             except ValueError:
                 raise Invalid(self.msg)

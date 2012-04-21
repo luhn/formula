@@ -9,23 +9,22 @@ class Field(object):
         self.placeholder = placeholder
         self.value = value
         self.renderer = renderer
-        self._validators = []
+        self._rules = []
         self.errors = []
         self.parent_name = None
 
-    def validators(self, *args):
+    def rules(self, *args):
         """Set some validators."""
-        self._validators.extend(args)
+        self._rules.extend(args)
 
-    v = validators
 
     def validate(self, value):
         """Run the value through all the validators."""
         self.value = value
         erred = False
-        for v in self._validators:
+        for rule in self._rules:
             try:
-                new = v(self.value)
+                new = rule(self.value)
                 if new:
                     self.value = new
             except Invalid as e:
