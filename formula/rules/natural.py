@@ -2,6 +2,11 @@ from rule import Rule
 from formula.exceptions import Invalid
 
 class Natural(Rule):
+    """
+    Validate that field is a natural number, that is, a positive integer. Zero
+    is by default allowed, but can be disallowed with Natural(zero=False)
+    """
+
     msg = 'You must enter a whole number'
 
     def __init__(self, msg=None, zero=True):

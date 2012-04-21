@@ -2,6 +2,8 @@ from rule import Rule
 from formula.exceptions import Invalid
 
 class Integer(Rule):
+    """Validate that field is an integer."""
+
     msg = 'You must enter a whole number.'
 
     def __call__(self, value):
