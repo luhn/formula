@@ -20,6 +20,7 @@ class Form(object):
         field.parent_name = self.name
         self.fields[name] = field
         self.ordered_fields.append(field)
+        return field
 
     def values(self, values):
         """Set and validate all submitted form data."""
