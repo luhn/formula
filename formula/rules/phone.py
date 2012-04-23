@@ -13,7 +13,6 @@ class Phone(Rule):
     def __init__(self, msg=None, area_code=None):
         if msg:
             self.msg = msg
-        print area_code
         self.area_code = str(area_code)
 
     def __call__(self, value):
