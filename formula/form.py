@@ -22,10 +22,19 @@ class Form(object):
         self.ordered_fields.append(field)
         return field
 
-    def values(self, values):
+    def set_values(self, values):
         """Set and validate all submitted form data."""
         for key in values:
             self[key].value = values[key]
+
+    def get_values(self):
+        """Get the values from the form data."""
+        values = {}
+        for key in self.fields:
+            values[key] = self.fields[key].value
+        return values
+
+    values = property(get_values, set_values)
 
     def validate(self, values):
         erred = False
