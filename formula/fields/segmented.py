@@ -22,5 +22,19 @@ class Segmented(Field):
                 r.append(self.escape(option))
             r.append('</a>')
 
-        r.append('</div></div>')
+        r.extend(['</div></div>',
+            '<input type="hidden" name="', self.name, '" id="', self.id(),
+            '_hidden" value="', self.value, '" />'])
+        r.append("""
+        <script type="text/javascript">
+        $(function() {
+            $('#%s a').click(function(e) {
+                $(this).parent().children().removeClass('active');
+                $(this).addClass('active');
+                $('#%s_hidden').val($(this).data('value'));
+                e.preventDefault();
+            });
+        });
+        </script>
+        """ % (self.id(), self.id()))
         return self.renderer(self, ''.join(r))
