@@ -15,16 +15,13 @@ class Select(Field):
 
         for option in self.options:
             r.extend(['<option value="', self.escape(option), '"'])
+            if str(option)==self.value:
+                r.append(' selected="selected"')
+            r.append('>')
             #If it's a dictionary, get the text, otherwise use the value
             if isinstance(self.options, dict):
-                if str(self.options[option])==self.value:
-                    r.append(' selected="selected"')
-                r.append('>')
                 r.append(self.escape(self.options[option]))
             else:
-                if str(option)==self.value:
-                    r.append(' selected="selected"')
-                r.append('>')
                 r.append(self.escape(option))
             r.append('</option>')
 
