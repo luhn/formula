@@ -1,4 +1,5 @@
 from text import Text
+from password import Password
 from textarea import Textarea
 from select import Select
 from segmented import Segmented
