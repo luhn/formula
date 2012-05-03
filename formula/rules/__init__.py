@@ -1,4 +1,7 @@
 from required import Required
+from requiredchars import RequiredChars
+from length import Length
+from matches import Matches
 from numeric import Numeric
 from integer import Integer
 from natural import Natural
