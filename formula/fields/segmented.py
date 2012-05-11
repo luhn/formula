@@ -10,21 +10,21 @@ class Segmented(Field):
         r = ['<div class="btn-toolbar">',
                 '<div class="btn-group" id="', self.id(), '">']
         for option in self.options:
-            r.extend(['<a href="#" data-value="', self.escape(option),
+            r.extend(['<a href="#" data-value="', self.escape(str(option)),
                 '" class="btn'])
-            if str(option)==self.value:
+            if str(option)==str(self.value):
                 r.append(' active')
             r.append('">')
             #If it's a dictionary, get the text, otherwise use the value
             if isinstance(self.options, dict):
-                r.append(self.escape(self.options[option]))
+                r.append(self.escape(str(self.options[option])))
             else:
-                r.append(self.escape(option))
+                r.append(self.escape(str(option)))
             r.append('</a>')
 
         r.extend(['</div></div>',
             '<input type="hidden" name="', self.name, '" id="', self.id(),
-            '_hidden" value="', self.value, '" />'])
+            '_hidden" value="', str(self.value), '" />'])
         r.append("""
         <script type="text/javascript">
         $(function() {
@@ -37,4 +37,5 @@ class Segmented(Field):
         });
         </script>
         """ % (self.id(), self.id()))
+        print(r[15:17])
         return self.renderer(self, ''.join(r))
