@@ -10,7 +10,7 @@ setup(
     packages=[
         'formula',
         'formula.fields',
-        'formula.validators',
+        'formula.rules',
         'formula.test'
         ],
     requires=[
