@@ -9,6 +9,9 @@ class Length(Rule):
         self.max = max
         if msg:
             self.msg = msg
+        elif min==max:
+            self.msg = 'The field must be exactly '+str(min)+' characters in \
+                    length.'
         elif max:
             self.msg = 'The field must be between '+str(min)+' and '+str(max)\
                     +' characters in length.'
