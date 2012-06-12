@@ -1,4 +1,5 @@
 from formula.exceptions import Invalid
+from formula.rules import Appropriate
 
 class Field(object):
 
@@ -9,7 +10,7 @@ class Field(object):
         self.placeholder = placeholder
         self.value = value
         self.renderer = renderer
-        self._rules = []
+        self._rules = [ Appropriate() ]
         self._filters = []
         self.errors = []
         self.parent_name = None

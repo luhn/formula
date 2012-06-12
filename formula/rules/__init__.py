@@ -8,3 +8,4 @@ from natural import Natural
 from email import Email
 from phone import Phone
 from url import URL
+from appropriate import Appropriate
