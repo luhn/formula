@@ -1,5 +1,6 @@
 from formula.exceptions import Invalid
 from formula.rules import Appropriate
+from formula.filters import Trim
 
 class Field(object):
 
@@ -11,7 +12,7 @@ class Field(object):
         self.value = value
         self.renderer = renderer
         self._rules = [ Appropriate() ]
-        self._filters = []
+        self._filters = [ Trim() ]
         self.errors = []
         self.parent_name = None
 
