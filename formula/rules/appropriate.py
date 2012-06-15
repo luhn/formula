@@ -8,10 +8,11 @@ class Appropriate(Rule):
     words = []
 
     def __call__(self, value):
-        list = value.split()
-        for w in list:
-            if w.lower() in self.words:
-                raise Invalid(self.msg)
+        if isinstance(value, str):
+            list = value.split()
+            for w in list:
+                if w.lower() in self.words:
+                    raise Invalid(self.msg)
 
 __dir__ = os.path.dirname(os.path.abspath(__file__))
 for w in open(os.path.join(__dir__, 'badwords.txt')):
