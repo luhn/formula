@@ -28,7 +28,7 @@ class Segmented(Field):
         r.append("""
         <script type="text/javascript">
         $(function() {
-            $('#%s a').click(function(e) {
+            $('#%s a').live('click', function(e) {
                 $(this).parent().children().removeClass('active');
                 $(this).addClass('active');
                 $('#%s_hidden').val($(this).data('value'));
@@ -37,5 +37,4 @@ class Segmented(Field):
         });
         </script>
         """ % (self.id(), self.id()))
-        print(r[15:17])
         return self.renderer(self, ''.join(r))
