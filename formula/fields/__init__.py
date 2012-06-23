@@ -6,4 +6,5 @@ from segmented import Segmented
 from hidden import Hidden
 from checkbox import Checkbox
 from radiogroup import RadioGroup
+from checkboxgroup import CheckboxGroup
 from upload import Upload
