@@ -11,7 +11,10 @@ class Select(Field):
         r = ['<select name="', self.name, '" id="']
         if self.parent_name:
             r.extend([self.parent_name, '_'])
-        r.extend([self.name, '" size="', str(self.size), '">'])
+        r.extend([self.name, '"'])
+        if self.size>1:
+            r.extend(['size="', str(self.size), '"'])
+        r.append('>')
 
         for option in self.options:
             r.extend(['<option value="', self.escape(option), '"'])
