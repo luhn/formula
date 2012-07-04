@@ -10,9 +10,12 @@ setup(
     packages=[
         'formula',
         'formula.fields',
+        'formula.filters',
         'formula.rules',
-        'formula.test'
+        'formula.renderers',
+        'formula.test',
         ],
+    package_data={'formula.rules': ['badwords.txt']},
     requires=[
     ],
     )
