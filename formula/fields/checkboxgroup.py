@@ -5,8 +5,19 @@ class CheckboxGroup(Field):
     def __init__(self, name, options, **kwargs):
         self.options = options
         Field.__init__(self, name, **kwargs)
-        if self.value is None:
-            self.value = []
+
+    @property
+    def value(self):
+        return self._value
+
+    @value.setter
+    def value(self, value):
+        if value is None:
+            self._value = []
+        elif isinstance(value, list):
+            self._value = map(lambda x: str(x), value)
+        else:
+            self._value = [str(value)]
 
     def __html__(self):
         r = []
@@ -17,7 +28,7 @@ class CheckboxGroup(Field):
             if self.parent_name:
                 r.extend([self.parent_name, '_'])
             r.extend([self.name, '" value="', self.escape(option), '"'])
-            if self.value and (option in self.value):
+            if self.value and (str(option) in self.value):
                 r.append(' checked="checked"')
             r.append(' /> ')
             #If it's a dictionary, get the text, otherwise use the value
