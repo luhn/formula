@@ -11,3 +11,4 @@ class URL(Filter):
             scheme = urlparse(value).scheme
             if not (scheme=='http' or scheme=='https'):
                 return 'http://'+value
+        return value

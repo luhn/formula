@@ -7,5 +7,4 @@ class Trim(Filter):
     def __call__(self, value):
         if isinstance(value, str):
             return value.strip()
-        else:
-            return value
+        return value
