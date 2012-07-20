@@ -2,8 +2,9 @@ from field import Field
 
 class CheckboxGroup(Field):
     """Class to hold a group of checkboxes."""
-    def __init__(self, name, options, **kwargs):
+    def __init__(self, name, options, escape=True, **kwargs):
         self.options = options
+        self._escape = escape
         Field.__init__(self, name, **kwargs)
 
     @property
@@ -33,9 +34,15 @@ class CheckboxGroup(Field):
             r.append(' /> ')
             #If it's a dictionary, get the text, otherwise use the value
             if isinstance(self.options, dict):
-                r.append(self.escape(self.options[option]))
+                if self._escape:
+                    r.append(self.escape(self.options[option]))
+                else:
+                    r.append(self.options[option])
             else:
-                r.append(self.escape(option))
+                if self._escape:
+                    r.append(self.escape(option))
+                else:
+                    r.append(option)
             r.append('</label>')
 
         return self.renderer(self, ''.join(r))

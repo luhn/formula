@@ -16,6 +16,8 @@ class Input(Field):
         if self.parent_name:
             r.extend([self.parent_name, '_'])
         r.extend([self.name, '"'])
+        if self.classes:
+            r.extend([' class="', self.classes, '"'])
         if self.size:
             r.extend([' size="', str(self.size), '"'])
         if self.placeholder:

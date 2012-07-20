@@ -5,7 +5,7 @@ from formula.filters import Trim
 class Field(object):
 
     def __init__(self, name, label=None, placeholder=None, value=None,
-            renderer=None):
+            renderer=None, classes=None):
         self.name = name
         self.label = label
         self.placeholder = placeholder
@@ -14,6 +14,7 @@ class Field(object):
         self._rules = [ Appropriate() ]
         self._filters = [ Trim() ]
         self.errors = []
+        self.classes = classes
         self.parent_name = None
 
     def rules(self, *args):
