@@ -53,6 +53,10 @@ class Form(object):
         """Return the field of the corresponding name."""
         return self.fields[name]
 
+    def __setitem__(self, name, value):
+        """Set the value of the field with the corresponding name."""
+        self.fields[name].value = value
+
 
     def __call__(self):
         """Render all the fields."""
