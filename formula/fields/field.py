@@ -1,5 +1,5 @@
 from formula.exceptions import Invalid
-from formula.rules import Appropriate
+from formula.rules import Appropriate, Required
 from formula.filters import Trim
 
 class Field(object):
@@ -18,7 +18,12 @@ class Field(object):
         self.parent_name = None
 
     def rules(self, *args):
-        """Set some validators."""
+        """Set some rules."""
+        #If the field is required, use a Required placeholder
+        if(filter(lambda x: isinstance(x, Required), args)
+                and not self.placeholder):
+            self.placeholder = 'Required'
+
         self._rules.extend(args)
         return self
 
