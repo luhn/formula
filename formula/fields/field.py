@@ -47,7 +47,7 @@ class Field(object):
                     self.value = new
             except Invalid as e:
                 erred = True
-                self.errors.append(str(e))
+                self.errors.append(unicode(e))
         if erred:
             raise Invalid()
 
@@ -62,7 +62,7 @@ class Field(object):
     def escape(self, text):
         """A very, very basic way of escaping HTML entities, taken from
         http://wiki.python.org/moin/EscapingHtml"""
-        return "".join(self.html_escape_table.get(c,c) for c in str(text))
+        return "".join(self.html_escape_table.get(c,c) for c in unicode(text))
 
     def id(self):
         r = ''
