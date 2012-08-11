@@ -1,4 +1,6 @@
 
+def no_renderer(field, html):
+    return html
 
 def basic_renderer(field, html):
     r = ['<p']

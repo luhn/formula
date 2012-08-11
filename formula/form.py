@@ -1,12 +1,12 @@
 from exceptions import Invalid
 from renderers import basic_renderer
+from collections import OrderedDict
 
 class Form(object):
     """An object that stores all the fields of the form."""
 
     def __init__(self, name, renderer = None):
-        self.fields = {}
-        self.ordered_fields = []
+        self.fields = OrderedDict()
         self.name = name
         if renderer == None:
             renderer = basic_renderer
@@ -19,7 +19,6 @@ class Form(object):
             field.renderer = self.renderer
         field.parent_name = self.name
         self.fields[name] = field
-        self.ordered_fields.append(field)
         return field
 
     def set_values(self, values):
@@ -61,9 +60,32 @@ class Form(object):
     def __call__(self):
         """Render all the fields."""
         fields = []
-        for field in self.ordered_fields:
+        for field in self.fields.itervalues():
             fields.append(field.__html__())
         return ''.join(fields)
+
+    def range(self, start, end):
+        """Render all fields between the fields of start and end"""
+        class RangeMaker(object):
+            def __init__(self, fields, start, end):
+                self.start = start
+                self.end = end
+                self.fields = fields
+
+            def __html__(self):
+                appending = False
+                fields = []
+                for key, field in self.fields.iteritems():
+                    print key, repr(field)
+                    if key==self.start:
+                        appending = True
+                    elif key==self.end:
+                        break
+                    if appending:
+                        fields.append(field.__html__())
+                return ''.join(fields)
+
+        return RangeMaker(self.fields, start, end)
 
     def __html__(self):
         """For the sake of templating engines."""
