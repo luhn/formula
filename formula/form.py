@@ -76,7 +76,6 @@ class Form(object):
                 appending = False
                 fields = []
                 for key, field in self.fields.iteritems():
-                    print key, repr(field)
                     if key==self.start:
                         appending = True
                     elif key==self.end:
