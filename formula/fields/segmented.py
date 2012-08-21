@@ -7,7 +7,7 @@ class Segmented(Field):
         Field.__init__(self, name, **kwargs)
 
     def __html__(self):
-        r = ['<div class="btn-toolbar">',
+        r = ['<div class="btn-toolbar" data-behavior="segmented-field">',
                 '<div class="btn-group" id="', self.id(), '">']
         for option in self.options:
             r.extend(['<a href="#" data-value="', self.escape(str(option)),
@@ -25,16 +25,4 @@ class Segmented(Field):
         r.extend(['</div></div>',
             '<input type="hidden" name="', self.name, '" id="', self.id(),
             '_hidden" value="', str(self.value), '" />'])
-        r.append("""
-        <script type="text/javascript">
-        $(function() {
-            $('#%s a').live('click', function(e) {
-                $(this).parent().children().removeClass('active');
-                $(this).addClass('active');
-                $('#%s_hidden').val($(this).data('value'));
-                e.preventDefault();
-            });
-        });
-        </script>
-        """ % (self.id(), self.id()))
         return self.renderer(self, ''.join(r))
