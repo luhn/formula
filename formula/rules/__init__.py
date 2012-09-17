@@ -9,3 +9,5 @@ from email import Email
 from phone import Phone
 from url import URL
 from appropriate import Appropriate
+from regex import Regex
+
