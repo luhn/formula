@@ -10,8 +10,11 @@ class RadioGroup(Field):
         r = []
 
         for option in self.options:
-            r.extend(['<label class="radio">',
-                '<input type="radio" name="', self.name, '" id="'])
+            r.append('<label class="radio" id="')
+            if self.parent_name:
+                r.extend([self.parent_name, '_'])
+            r.extend([self.name, '_', str(option), '_label"><input type="radio" name="',
+                self.name, '" id="'])
             if self.parent_name:
                 r.extend([self.parent_name, '_'])
             r.extend([self.name, '" value="', self.escape(option), '"'])
