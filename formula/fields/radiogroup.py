@@ -18,7 +18,7 @@ class RadioGroup(Field):
             if self.parent_name:
                 r.extend([self.parent_name, '_'])
             r.extend([self.name, '" value="', self.escape(option), '"'])
-            if str(option)==self.value:
+            if str(option)==str(self.value):
                 r.append(' checked="checked"')
             r.append(' /> ')
             #If it's a dictionary, get the text, otherwise use the value
