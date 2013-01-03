@@ -62,9 +62,9 @@ Plenty of hooks for plugins:
 
 ```python
 class MyPlugin(formula.Plugin):
-    def render_field(self, field):
-        field.classes.append('awesomesauce')
-        return field
+    def render_field(self, tag, field):
+        tag.classes.append('awesomesauce')
+        return tag
 
 # The plugin argument also works with formula.Form()
 print formula.Text('email', plugin=MyPlugin).render()
