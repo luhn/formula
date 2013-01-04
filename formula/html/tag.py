@@ -47,7 +47,7 @@ class Tag(object):
         if not re.match(self.valid_attr_regex, name):
             raise ValueError('"' + name +'" is an invalid attribute name.')
 
-        self.attributes[name.lower()] = value
+        self.attributes[name.lower()] = str(value)
 
 
     def set_attributes(self, attributes):
@@ -73,6 +73,9 @@ class Tag(object):
     def __getitem__(self, name):
         """Get an attribute using self[name]"""
         return self.get_attribute(name)
+
+    def delete_attribute(self, name):
+        """Remove an attribute."""
 
 
     def render(self):

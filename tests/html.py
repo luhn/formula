@@ -86,6 +86,11 @@ class TestHtmlClasses(unittest.TestCase):
                 Tag('a', href='<">').render(),
                 '<a href="<&quot;>"></a>')
 
+    def test_non_string_attributes(self):
+        self.assertEqual(
+                Tag('p', title=15).render(),
+                '<p title="15"></p>')
+
     def test_set_attribute_shorthand(self):
         tag = Tag('img')
         tag['src'] = 'http://i.imgur.com/iWHK2.gif'
