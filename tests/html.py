@@ -147,4 +147,31 @@ class TestHtmlClasses(unittest.TestCase):
         with self.assertRaises(ValueError):
             Tag('p', name='#paragraph')
 
+    def test_classes_as_string(self):
+        self.assertEqual(
+                Tag('p', class_='paragraph bold').render(),
+                '<p class="paragraph bold"></p>')
+
+    def test_classes_as_list(self):
+        self.assertEqual(
+                Tag('p', class_=['paragraph', 'bold']).render(),
+                '<p class="paragraph bold"></p>')
+
+        tag = Tag('p', class_=['paragraph'])
+        tag.classes.append('bold')
+        self.assertEqual(
+                tag.render(),
+                '<p class="paragraph bold"></p>')
+
+    def test_classes_as_string_and_list(self):
+        tag = Tag('p', class_='paragraph bold')
+        tag.classes.append('italic')
+        self.assertEqual(
+                tag.render(),
+                '<p class="paragraph bold italic"></p>')
+
+    def test_invalid_class_name(self):
+        with self.assertRaises(ValueError):
+            Tag('p', class_='-h`')
+
 

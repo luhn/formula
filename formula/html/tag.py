@@ -15,6 +15,9 @@ class Tag(object):
     #: The regex checked against the id and name attributes.
     valid_id_regex = re.compile(r'[a-zA-Z][a-zA-Z0-9-_:\.]*$')
 
+    #: The regex checked against class names in the class attribute.
+    valid_class_regex = re.compile(r'-?[_a-zA-Z]+[_a-zA-Z0-9-]*$')
+
     def __init__(self, tag_name, **kwargs):
         """Construct an object representing an HTML tag.
 
@@ -31,10 +34,28 @@ class Tag(object):
         self.tag_name = tag_name.lower()
         self.self_closing = tag_name in void_elements
         self.attributes = {}
+        self._classes = []
 
         #Set all the attributes passed in.
         for (key, value) in kwargs.iteritems():
             self.set_attribute(key, value)
+
+    @property
+    def classes(self):
+        """A list of the classes in the classes attribute.  Can be set directly
+        or via set_attribute(), and a string will be split up along the
+        whitespace.  It's worth noting that, as a list, you should feel free
+        to use append() and extend()."""
+        return self._classes
+
+    @classes.setter
+    def classes(self, value):
+        if isinstance(value, str):
+            value = value.split()
+        for item in value:
+            if not self.valid_class_regex.match(item):
+                raise ValueError('"' + item + '" is not a valid class name.')
+        self._classes = value
 
     def set_attribute(self, name, value):
         """Set a single attribute to value.
@@ -53,13 +74,18 @@ class Tag(object):
         if name == 'id_':
             name = 'id'
 
-        if not re.match(self.valid_attr_regex, name):
+        if not self.valid_attr_regex.match(name):
             raise ValueError('"' + name +'" is an invalid attribute name.')
 
         if name == 'id' or name == 'name':
-            if not re.match(self.valid_id_regex, value):
+            if not self.valid_id_regex.match(value):
                 raise ValueError('"' + value +'" is not a valid value for ' +
                         'the name or id attribute.')
+
+        #A special case for the class attribute
+        if name in ['class', 'class_', 'classes', 'classes_']:
+            self.classes = value
+            return
 
         self.attributes[name.lower()] = str(value)
 
@@ -104,6 +130,10 @@ class Tag(object):
         #Put in the attributes
         for (name, value) in self.attributes.iteritems():
             r.extend([' ', name, '="', escape_quotes(value), '"'])
+
+        #Put in the classes
+        if self.classes:
+            r.extend([' class="', ' '.join(self.classes), '"'])
 
         #Close the tag
         if self.self_closing:
