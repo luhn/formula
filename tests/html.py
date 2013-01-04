@@ -1,8 +1,12 @@
 import unittest
 from bs4 import BeautifulSoup
-from formula.html import Tag
+from formula.html import Tag, TagContent
 
 class TestHtmlClasses(unittest.TestCase):
+
+    ######################
+    # Test the Tag class #
+    ######################
 
     def test_basic_tag(self):
         self.assertEqual(
@@ -175,3 +179,47 @@ class TestHtmlClasses(unittest.TestCase):
             Tag('p', class_='-h`')
 
 
+    #############################
+    # Test the TagContent class #
+    #############################
+
+    def test_string_tag_content(self):
+        self.assertEqual(
+                TagContent('test').render(),
+                'test')
+
+        self.assertEqual(
+                TagContent('test').__html__(),
+                'test')
+
+    def test_multi_string_tag_content(self):
+        self.assertEqual(
+                TagContent('hello', 'world').render(),
+                'helloworld')
+
+    def test_string_tag_content_escape(self):
+        self.assertEqual(
+                TagContent('<hello>', '&world').render(),
+                '&lt;hello&gt;&amp;world')
+
+    def test_html_tag_content(self):
+
+        self.assertEqual(
+                TagContent(SomeHtml()).render(),
+                '<html>')
+
+    def test_mixed_tag_content(self):
+        self.assertEqual(
+                TagContent('hello', SomeHtml(), 'world').render(),
+                'hello<html>world')
+
+
+
+    ####################################
+    # Test Tag and TagContent together #
+    ####################################
+
+
+class SomeHtml(object):
+    def __html__(self):
+        return '<html>'
