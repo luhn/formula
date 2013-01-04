@@ -76,6 +76,11 @@ class Tag(object):
 
     def delete_attribute(self, name):
         """Remove an attribute."""
+        del self.attributes[name]
+
+    def __delitem__(self, name):
+        """Delete an attribute using del self[name]"""
+        self.delete_attribute(name)
 
 
     def render(self):

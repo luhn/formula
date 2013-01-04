@@ -119,3 +119,19 @@ class TestHtmlClasses(unittest.TestCase):
             tag['title']
 
 
+    def test_delete_attribute(self):
+        tag = Tag('img', src='http://i.imgur.com/iWHK2.gif',
+                alt='Cats are liquid, not solid.')
+        tag.delete_attribute('alt')
+        self.assertEqual(
+                tag.render(),
+                '<img src="http://i.imgur.com/iWHK2.gif" />')
+
+        tag = Tag('img', src='http://i.imgur.com/iWHK2.gif',
+                alt='Cats are liquid, not solid.')
+        del tag['alt']
+        self.assertEqual(
+                tag.render(),
+                '<img src="http://i.imgur.com/iWHK2.gif" />')
+
+
