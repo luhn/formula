@@ -219,6 +219,35 @@ class TestHtmlClasses(unittest.TestCase):
     # Test Tag and TagContent together #
     ####################################
 
+    def test_tag_with_string(self):
+        self.assertEqual(
+                Tag('p', 'Hello world!').render(),
+                '<p>Hello world!</p>')
+
+    def test_tag_with_list(self):
+        self.assertEqual(
+                Tag('p', [ 'Hello ', Tag('span', 'w'), 'orld.']).render(),
+                '<p>Hello <span>w</span>orld.</p>')
+
+    def test_tag_with_tagcontent(self):
+        self.assertEqual(
+                Tag('p', TagContent('Hello world')).render(),
+                '<p>Hello world</p>')
+
+    #And now... For the FINAL TEST!
+    def test_boss(self):
+        field = Tag('input', type_='text', value='test@example.com',
+                placeholder='Required', id_='my_field')
+        label = Tag('label', ['Email: ', field], for_='my_field')
+        soup = BeautifulSoup(label.render())
+
+        self.assertNotEqual(soup.label, None)
+        self.assertNotEqual(soup.label.input, None)
+        self.assertEqual(soup.label['for'], 'my_field')
+        self.assertEqual(soup.label.get_text(), 'Email: ')
+
+
+
 
 class SomeHtml(object):
     def __html__(self):

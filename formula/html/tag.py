@@ -1,5 +1,7 @@
 import re
 
+from tagcontent import TagContent
+
 void_elements = {'area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img',
         'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'}
 
@@ -18,13 +20,15 @@ class Tag(object):
     #: The regex checked against class names in the class attribute.
     valid_class_regex = re.compile(r'-?[_a-zA-Z]+[_a-zA-Z0-9-]*$')
 
-    def __init__(self, tag_name, **kwargs):
+    def __init__(self, tag_name, content=None, **kwargs):
         """Construct an object representing an HTML tag.
 
         :param tag_name: The HTML tag name.  Must match valid_attr_regex.
         :type tag_name: str
         :param **kwargs:  All the additional keyword arguments will be set
-            as attributes.
+            as attributes.  Because PEP8 suggests that any argument name
+            clashing with a reserved keyword should be appended with an
+            underscore, any trailing underscores will be truncated
 
         """
 
@@ -32,6 +36,16 @@ class Tag(object):
             raise ValueError('Invalid tag name.')
 
         self.tag_name = tag_name.lower()
+
+        if content is None:
+            self.content = None
+        elif isinstance(content, list):
+            self.content = TagContent(*content)
+        elif isinstance(content, TagContent):
+            self.content = content
+        else:
+            self.content = TagContent(content)
+
         self.self_closing = tag_name in void_elements
         self.attributes = {}
         self._classes = []
@@ -71,8 +85,7 @@ class Tag(object):
 
         """
 
-        if name == 'id_':
-            name = 'id'
+        name = name.rstrip('_')
 
         if not self.valid_attr_regex.match(name):
             raise ValueError('"' + name +'" is an invalid attribute name.')
@@ -83,7 +96,7 @@ class Tag(object):
                         'the name or id attribute.')
 
         #A special case for the class attribute
-        if name in ['class', 'class_', 'classes', 'classes_']:
+        if name == 'class' or name == 'classes':
             self.classes = value
             return
 
@@ -136,13 +149,14 @@ class Tag(object):
             r.extend([' class="', ' '.join(self.classes), '"'])
 
         #Close the tag
-        if self.self_closing:
+        if self.self_closing and not self.content:
             if self.XHTML:
                 r.append(' />')
             else:
                 r.append('>')
         else:
-            r.extend(['></', self.tag_name, '>'])
+            r.extend(['>', self.content.render() if self.content else '', '</',
+                self.tag_name, '>'])
 
         #Smoosh it all together and return
         return ''.join(r)
