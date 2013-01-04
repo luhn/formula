@@ -134,4 +134,17 @@ class TestHtmlClasses(unittest.TestCase):
                 tag.render(),
                 '<img src="http://i.imgur.com/iWHK2.gif" />')
 
+    def test_id_attribute(self):
+        self.assertEqual(
+                Tag('p', id_='paragraph').render(),
+                '<p id="paragraph"></p>')
+
+    def test_invalid_id_attribute(self):
+        with self.assertRaises(ValueError):
+            Tag('p', id_='#paragraph')
+
+    def test_invalid_name_attribute(self):
+        with self.assertRaises(ValueError):
+            Tag('p', name='#paragraph')
+
 

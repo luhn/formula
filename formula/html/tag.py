@@ -10,7 +10,10 @@ class Tag(object):
     XHTML = True
 
     #: The regex checked against the tag name and attributes.
-    valid_attr_regex = re.compile('[a-zA-Z_:][-a-zA-Z0-9_:.]*$')
+    valid_attr_regex = re.compile(r'[a-zA-Z_:][-a-zA-Z0-9_:\.]*$')
+
+    #: The regex checked against the id and name attributes.
+    valid_id_regex = re.compile(r'[a-zA-Z][a-zA-Z0-9-_:\.]*$')
 
     def __init__(self, tag_name, **kwargs):
         """Construct an object representing an HTML tag.
@@ -42,10 +45,21 @@ class Tag(object):
             automatically be escaped when rendering.
         :type value:  str
 
+        If you are setting the name or id attribute, the value must conform to
+        valid_id_regex.
+
         """
+
+        if name == 'id_':
+            name = 'id'
 
         if not re.match(self.valid_attr_regex, name):
             raise ValueError('"' + name +'" is an invalid attribute name.')
+
+        if name == 'id' or name == 'name':
+            if not re.match(self.valid_id_regex, value):
+                raise ValueError('"' + value +'" is not a valid value for ' +
+                        'the name or id attribute.')
 
         self.attributes[name.lower()] = str(value)
 
