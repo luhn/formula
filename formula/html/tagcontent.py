@@ -1,0 +1,4 @@
+
+
+class TagContent(object):
+    pass
