@@ -39,7 +39,7 @@ class Tag(object):
         :param name:  The attribute name.  Must match valid_attr_regex.
         :type name:  str
         :param value:  The value for the attribute.  Double quotes will
-            automatically be escaped.
+            automatically be escaped when rendering.
         :type value:  str
 
         """
@@ -60,6 +60,19 @@ class Tag(object):
 
         for name, value in attributes.iteritems():
             self.set_attribute(name, value)
+
+
+    def __setitem__(self, name, value):
+        """Set an attribute using item assignment."""
+        self.set_attribute(name, value)
+
+    def get_attribute(self, name):
+        """Get the value of an attribute."""
+        return self.attributes[name]
+
+    def __getitem__(self, name):
+        """Get an attribute using self[name]"""
+        return self.get_attribute(name)
 
 
     def render(self):

@@ -86,5 +86,31 @@ class TestHtmlClasses(unittest.TestCase):
                 Tag('a', href='<">').render(),
                 '<a href="<&quot;>"></a>')
 
+    def test_set_attribute_shorthand(self):
+        tag = Tag('img')
+        tag['src'] = 'http://i.imgur.com/iWHK2.gif'
+        self.assertEqual(
+                tag.render(),
+                '<img src="http://i.imgur.com/iWHK2.gif" />')
+
+    def test_get_attribute(self):
+        tag = Tag('img', src='http://i.imgur.com/iWHK2.gif',
+                alt='Cats are liquid, not solid.')
+        self.assertEqual(
+                tag.get_attribute('src'),
+                'http://i.imgur.com/iWHK2.gif')
+        self.assertEqual(
+                tag['alt'],
+                'Cats are liquid, not solid.')
+
+    def test_invalid_get_attribute(self):
+        tag = Tag('img', src='http://i.imgur.com/iWHK2.gif',
+                alt='Cats are liquid, not solid.')
+
+        with self.assertRaises(KeyError):
+            tag.get_attribute('href')
+
+        with self.assertRaises(KeyError):
+            tag['title']
 
 
