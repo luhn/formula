@@ -12,6 +12,9 @@ class TestHtmlClasses(unittest.TestCase):
                 Tag('DIV').render(),
                 '<div></div>')
 
+        with self.assertRaises(ValueError):
+            Tag('div`').render()
+
         #Make sure the HTML alias also works.
         self.assertEqual(
                 Tag('span').__html__(),

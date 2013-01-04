@@ -1,3 +1,5 @@
+import re
+
 void_elements = {'area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img',
         'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'}
 
@@ -7,6 +9,8 @@ class Tag(object):
     #: Enables XML-style HTML.
     XHTML = True
 
+    valid_attr_regex = re.compile('[a-zA-Z_:][-a-zA-Z0-9_:.]*$')
+
     def __init__(self, tag_name):
         """Construct an object representing an HTML tag.
 
@@ -14,6 +18,9 @@ class Tag(object):
         :type tag_name: str
 
         """
+
+        if not re.match(self.valid_attr_regex, tag_name):
+            raise ValueError('Invalid tag name.')
 
         self.tag_name = tag_name.lower()
         self.self_closing = tag_name in void_elements
