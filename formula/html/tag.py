@@ -6,29 +6,46 @@ void_elements = {'area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img',
         'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'}
 
 class Tag(object):
-    """A Tag object represents an HTML tag, and will be rendered into HTML."""
+    """
+    A Tag object represents an HTML tag, and will be rendered into HTML.
+
+    :param tag_name: The HTML tag name.  Must match valid_attr_regex.
+    :type tag_name: str
+    :param content:  The content of the tag.
+    :param type:  str, list, TagContent, or None
+    :param kwargs:  Attributes of the function.
+
+    Because PEP8 suggests that any argument name clashing with a reserved
+    keyword should be appended with an underscore, any attribute names with
+    trailing underscores will be trimmed.
+
+    A basic use of the class::
+
+        Tag('p', 'Hello world!', class_=['bold', 'italic'],
+            style='background:red;')
+
+    When rendered, this will result in::
+
+        <p class="bold italic" style="backround:red;">Hello world!</p>
+
+    :cvar valid_attr_regex: ``[a-zA-Z_:][-a-zA-Z0-9_:\.]*$``
+    :cvar valid_id_regex: ``[a-zA-Z][a-zA-Z0-9-_:\.]*$``
+    :cvar valid_class_regex: ``-?[_a-zA-Z]+[_a-zA-Z0-9-]*$``
+
+    """
 
     #: Enables XML-style HTML.
     XHTML = True
 
-    #: The regex checked against the tag name and attributes.
     valid_attr_regex = re.compile(r'[a-zA-Z_:][-a-zA-Z0-9_:\.]*$')
 
-    #: The regex checked against the id and name attributes.
     valid_id_regex = re.compile(r'[a-zA-Z][a-zA-Z0-9-_:\.]*$')
 
-    #: The regex checked against class names in the class attribute.
     valid_class_regex = re.compile(r'-?[_a-zA-Z]+[_a-zA-Z0-9-]*$')
 
     def __init__(self, tag_name, content=None, **kwargs):
-        """Construct an object representing an HTML tag.
+        """Initialize blah.
 
-        :param tag_name: The HTML tag name.  Must match valid_attr_regex.
-        :type tag_name: str
-        :param **kwargs:  All the additional keyword arguments will be set
-            as attributes.  Because PEP8 suggests that any argument name
-            clashing with a reserved keyword should be appended with an
-            underscore, any trailing underscores will be truncated
 
         """
 

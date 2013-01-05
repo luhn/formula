@@ -1,17 +1,16 @@
 import cgi
 
 class TagContent(object):
-    """This class represents the content of an HTML tag."""
+    """This class represents the content of an HTML tag.
+
+    :param *args:  The content of the tags as a list of objects.  Valid
+        objects either inherit from basestring (notably ``str`` and
+        ``unicode``) or have a ``__html__()`` method.
+
+    """
+
 
     def __init__(self, *args):
-        """Initialize the object.
-
-        :param *args:  The content of the tags as a list of objects.  Valid
-            objects either inherit from basestring (notably ``str`` and
-            ``unicode``) or have a ``__html__()`` method.
-
-        """
-
         self.contents = args
 
     def render(self):
