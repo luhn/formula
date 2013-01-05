@@ -27,14 +27,14 @@ class CheckboxGroup(Field):
             r.append('<label class="checkbox" for="')
             if self.parent_name:
                 r.extend([self.parent_name, '_'])
-            r.extend([self.name, '_', option, '" id="'])
+            r.extend([self.name, '_', str(option), '" id="'])
             if self.parent_name:
                 r.extend([self.parent_name, '_'])
-            r.extend([self.name, '_', option, '_label',
+            r.extend([self.name, '_', str(option), '_label',
                 '"><input type="checkbox" name="', self.name, '" id="'])
             if self.parent_name:
                 r.extend([self.parent_name, '_'])
-            r.extend([self.name, '_', option, '" value="', self.escape(option), '"'])
+            r.extend([self.name, '_', str(option), '" value="', self.escape(option), '"'])
             if self.value and (str(option) in self.value):
                 r.append(' checked="checked"')
             r.append(' /> ')
