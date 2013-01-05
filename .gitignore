@@ -4,6 +4,8 @@
 .DS_Store
 
 docs/_build/
+.coverage
+htmlcov/
 
 #######
 # .gitignore for Python developers
