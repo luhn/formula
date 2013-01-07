@@ -65,6 +65,11 @@ class TestHtmlClasses(unittest.TestCase):
         self.assertEqual(soup.img['src'], 'http://i.imgur.com/iWHK2.gif')
         self.assertEqual(soup.img['alt'], 'Cats are liquid, not solid.')
 
+    def test_set_attribute_as_none(self):
+        self.assertEqual(
+                Tag('p', color=None).render(),
+                '<p></p>')
+
     def test_set_attributes(self):
         #And then the set_attributes method
         tag = Tag('img')

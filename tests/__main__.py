@@ -10,6 +10,7 @@ if __name__ == '__main__':
         exit()
 
     from html import TestHtmlClasses
+    from fields import TestFields
 
     unittest.main()
 

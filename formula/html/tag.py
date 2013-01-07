@@ -102,6 +102,9 @@ class Tag(object):
 
         """
 
+        if value is None:
+            return
+
         name = name.rstrip('_')
 
         if not self.valid_attr_regex.match(name):
