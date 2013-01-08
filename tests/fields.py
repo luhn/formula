@@ -15,6 +15,13 @@ class TestFields(unittest.TestCase):
         self.assertEqual(soup.input['name'], 'email')
         self.assertEqual(soup.input['value'], 'test@example.com')
 
+    def test_input_with_attributes(self):
+        tag = Text('email', classes=['error', 'large'],
+                style='font-weight:bold;')
+        soup = BeautifulSoup(tag.render())
+        self.assertEqual(soup.input['class'], ['error', 'large'])
+        self.assertEqual(soup.input['style'], 'font-weight:bold;')
+
     def test_input_with_id(self):
         soup = BeautifulSoup(Text('email', id='my_email_id').render())
         self.assertEqual(soup.input['id'], 'my_email_id')

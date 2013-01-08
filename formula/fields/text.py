@@ -4,7 +4,8 @@ from formula.label import Label
 class Text(object):
     """A text input."""
 
-    def __init__(self, name, value=None, label=None, wrapper=None, id=None):
+    def __init__(self, name, value=None, label=None, wrapper=None, id=None,
+            **kwargs):
         self.name = name
         self.value = str(value)
         if id is True:
@@ -19,6 +20,7 @@ class Text(object):
             self.wrapper = Label(wrapper)
         else:
             self.wrapper = wrapper
+        self.attributes = kwargs
 
     @property
     def id(self):
@@ -43,6 +45,7 @@ class Text(object):
         """Return a Tag or TagContent object."""
         tag = Tag('input', type_='text', name=self.name, value=self.value,
                 id=self._id)
+        tag.set_attributes(self.attributes)
         if self.label:
             if self.label.align == 'left':
                 args = [self.label.label(self), ' ', tag]
