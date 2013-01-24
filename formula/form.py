@@ -56,6 +56,9 @@ class Form(object):
         """Set the value of the field with the corresponding name."""
         self.fields[name].value = value
 
+    def __contains__(self, name):
+        return name in self.fields
+
 
     def __call__(self):
         """Render all the fields."""
