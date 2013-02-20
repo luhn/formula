@@ -16,6 +16,6 @@ class Textarea(Field):
         r.extend([self.name, '" rows="', str(self.rows), '" cols="',
             str(self.cols), '">'])
         if self.value:
-            r.append(self.escape(str(self.value)))
+            r.append(self.escape(unicode(self.value)))
         r.append('</textarea>')
         return self.renderer(self, ''.join(r))
