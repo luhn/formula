@@ -17,6 +17,18 @@ class Field(object):
         self.classes = classes
         self.parent_name = None
 
+
+    @property
+    def value(self):
+        return self._value
+
+    @value.setter
+    def value(self, value):
+        if isinstance(value, basestring):
+            self._value = value.strip()
+        else:
+            self._value = str(value)
+
     def rules(self, *args):
         """Set some rules."""
         #If the field is required, use a Required placeholder
