@@ -24,7 +24,9 @@ class Field(object):
 
     @value.setter
     def value(self, value):
-        if isinstance(value, basestring):
+        if value is None:
+            self._value = ''
+        elif isinstance(value, basestring):
             self._value = value.strip()
         else:
             self._value = str(value)
