@@ -14,7 +14,11 @@ class Textarea(Field):
         if self.parent_name:
             r.extend([self.parent_name, '_'])
         r.extend([self.name, '" rows="', str(self.rows), '" cols="',
-            str(self.cols), '">'])
+            str(self.cols), '"'])
+        if self.placeholder:
+            r.extend([' placeholder="', self.escape(unicode(self.placeholder)),
+                '"'])
+        r.append('>')
         if self.value:
             r.append(self.escape(unicode(self.value)))
         r.append('</textarea>')
