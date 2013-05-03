@@ -4,14 +4,22 @@ from formula.label import Label
 class Text(object):
     """A text input."""
 
-    def __init__(self, name, value=None, label=None, wrapper=None, id=None,
+    def __init__(self, name, value=None, label=None, wrapper=None,
             **kwargs):
         self.name = name
         self.value = str(value) if value is not None else ''
-        if id is True:
-            self.id = True
+
+        """Some special code for `id`.  If it's explicitly set, use that.
+        Otherwise the default value varies on if there's a label of not."""
+        if 'id' in kwargs:
+            self.id = kwargs['id']
+            del kwargs['id']
         else:
-            self._id = id
+            if label or wrapper:
+                self.id = True
+            else:
+                self.id = None
+
         if isinstance(label, basestring):
             self.label = Label(label)
         else:
@@ -44,7 +52,7 @@ class Text(object):
     def prerender(self):
         """Return a Tag or TagContent object."""
         tag = Tag('input', type_='text', name=self.name, value=self.value,
-                id=self._id)
+                id=self.id)
         tag.set_attributes(self.attributes)
         if self.label:
             if self.label.align == 'left':
