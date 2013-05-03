@@ -7,7 +7,7 @@ class Text(object):
     def __init__(self, name, value=None, label=None, wrapper=None, id=None,
             **kwargs):
         self.name = name
-        self.value = str(value)
+        self.value = str(value) if value is not None else ''
         if id is True:
             self.id = True
         else:
@@ -61,3 +61,4 @@ class Text(object):
 
     def __html__(self):
         return self.render()
+
