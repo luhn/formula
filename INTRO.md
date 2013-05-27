@@ -68,3 +68,16 @@ Exception:  formula.exceptions.Invalid
 
 Now, you probably noticed the `data-rules` attribute.  What's that all about?  It's so the rules can be enforced client-side as well as server-side.  Read more about **client-side validation**.
 
+Of course, sometimes you also want to transform the data that you get.  This is where filters come in.  Let's say usernames are case insensitive, so you want to make it lowercase before putting the value into the database.
+
+```python
+>>> field.filters = [ formula.Strip, # Strip any extra spaces
+>>>         formula.Lowercase, # Make everything lowercase
+>>>         ]
+>>> field.validate('FooBar13 ')
+'FooBar13'
+>>> field.value
+'foobar13'
+```
+
+Now, you may not think this is very useful.  After all, you could just do this by manually manipulating field.value.  However, when you get into form models and are reusing forms, this becomes more useful.
