@@ -22,3 +22,24 @@ ${field}
 </body>
 </html>
 ```
+
+We can easily add any HTML attributes we desire.
+
+```python
+>>> field = formula.Text('my_field', value='Foo', placeholder='Bar', class=['baz', 'bop'])
+>>> field.render()
+'<input type="text" name="my_field" value="Foo" placeholder="Bar" class="baz bop" />'
+```
+
+And let's not forget about labels.
+
+```python
+>>> field = formula.Text('my_field', label='My field')
+>>> field.label.render() + ' ' + field.render()
+'<label for="my_field">My field</label> <input type="text" name="my_field" id="my_field" />'
+>>> field.wrapper.render()
+'<label>My field <input type="text" name="my_field" /></label>'
+```
+
+You'll notice that there's `field.label` and `field.wrapper`.  What's up with that?  `field.wrapper` is a label tag with the field inside it.  `field.label` is a standalone label tag.
+
