@@ -61,7 +61,7 @@ You can see **a full list of rules** or even **make your own rules**.  Now, let'
 >>> field.validate('Foobar') # Too short
 Exception:  formula.exceptions.Invalid
 >>> field.render()
-'<input type="text" name="username" value="Foobar" class="error" data-rules="{'required':true,'length':[8,12],'characters':'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'}" />'
+'<input type="text" name="username" value="Foobar" class="error" data-rules="{\'required\':true,\'length\':[8,12],\'characters\':'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'}" />'
 >>> field.errors.render()
 '<span class="errors">Must be between 8 and 12 characters.</span>'
 ```
@@ -75,7 +75,7 @@ Of course, sometimes you also want to transform the data that you get.  This is 
 >>>         formula.Lowercase, # Make everything lowercase
 >>>         ]
 >>> field.validate('FooBar13 ')
-'FooBar13'
+'foobar13'
 >>> field.value
 'foobar13'
 ```
