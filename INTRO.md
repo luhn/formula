@@ -43,3 +43,28 @@ And let's not forget about labels.
 
 You'll notice that there's `field.label` and `field.wrapper`.  What's up with that?  `field.wrapper` is a label tag with the field inside it.  `field.label` is a standalone label tag.
 
+## Rules and filters
+
+Form validation is a very useful tool.  This can be done using formula's rules.  For example:
+
+```python
+>>> field = formula.Text('username')
+>>> field.rules = [ formula.Required, # They cannot leave the field blank
+>>>         formula.Length(8, 12), # Must be between 8 and 12 characters
+>>>         formula.Characters(formula.ALPHANUMERICAL), # Only letters and numerals allowed
+>>>         ]
+```
+
+You can see **a full list of rules** or even **make your own rules**.  Now, let's have somebody enter something into our form.
+
+```python
+>>> field.validate('Foobar') # Too short
+Exception:  formula.exceptions.Invalid
+>>> field.render()
+'<input type="text" name="username" value="Foobar" class="error" data-rules="{'required':true,'length':[8,12],'characters':'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'}" />'
+>>> field.errors.render()
+'<span class="errors">Must be between 8 and 12 characters.</span>'
+```
+
+Now, you probably noticed the `data-rules` attribute.  What's that all about?  It's so the rules can be enforced client-side as well as server-side.  Read more about **client-side validation**.
+
