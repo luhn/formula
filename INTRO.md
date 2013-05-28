@@ -84,3 +84,31 @@ Of course, sometimes you also want to transform the data that you get.  This is 
 You can see **a full list of filters** or even **make your own filters**.
 
 Now, you may not think this is very useful.  After all, you could just do this by manually manipulating field.value.  However, when you get into form models and are reusing forms, this becomes more useful.
+
+## Forms
+
+Of course, single fields by themselves are usually not very useful.  Most of the time you'll be using a collection of fields, or a `Form`.  The simplest way to do this is by initializing an instance of the `Form` class and setting the fields.
+
+```python
+>>> form = formula.Form()
+>>> form.username = formula.Text('username')
+>>> form.password = formula.Password('password')
+>>> data = form.validate({
+>>>         'username': 'Test123',
+>>>         'password': 'Test321',
+>>>         })
+>>> data.username
+'Test123'
+>>> data.password
+'Test321'
+```
+
+But this isn't very reusable.  You can make a reusable form by subclassing the `Form` class.
+
+```python
+>>> class MyForm(formula.Form):
+>>>     username = formula.Text('username')
+>>>     password = formula.Password('password')
+>>> 
+>>> form = MyForm()
+```
