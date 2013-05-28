@@ -48,11 +48,11 @@ You'll notice that there's `field.label` and `field.wrapper`.  What's up with th
 Form validation is a very useful tool.  This can be done using formula's rules.  For example:
 
 ```python
->>> field = formula.Text('username')
->>> field.rules = [ formula.Required, # They cannot leave the field blank
+>>> field = formula.Text('username', rules=[
+>>>         formula.Required, # They cannot leave the field blank
 >>>         formula.Length(8, 12), # Must be between 8 and 12 characters
 >>>         formula.Characters(formula.ALPHANUMERICAL), # Only letters and numerals allowed
->>>         ]
+>>>         ])
 ```
 
 You can see **a full list of rules** or even **make your own rules**.  Now, let's have somebody enter something into our form.
@@ -71,13 +71,16 @@ Now, you probably noticed the `data-rules` attribute.  What's that all about?  I
 Of course, sometimes you also want to transform the data that you get.  This is where filters come in.  Let's say usernames are case insensitive, so you want to make it lowercase before putting the value into the database.
 
 ```python
->>> field.filters = [ formula.Strip, # Strip any extra spaces
+>>> field = Text('username', filters=[
+>>>         formula.Strip, # Strip any extra spaces
 >>>         formula.Lowercase, # Make everything lowercase
->>>         ]
+>>>         ])
 >>> field.validate('FooBar13 ')
 'foobar13'
 >>> field.value
 'foobar13'
 ```
+
+You can see **a full list of filters** or even **make your own filters**.
 
 Now, you may not think this is very useful.  After all, you could just do this by manually manipulating field.value.  However, when you get into form models and are reusing forms, this becomes more useful.
