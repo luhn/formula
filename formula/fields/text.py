@@ -1,11 +1,9 @@
 from formula.html import Tag, TagContent
-from formula.label import Label
 
 class Text(object):
     """A text input."""
 
-    def __init__(self, name, value=None, label=None, wrapper=None,
-            **kwargs):
+    def __init__(self, name, value=None, label=None, **kwargs):
         self.name = name
         self.value = str(value) if value is not None else ''
 
@@ -15,19 +13,13 @@ class Text(object):
             self.id = kwargs['id']
             del kwargs['id']
         else:
-            if label or wrapper:
+            if label:
                 self.id = True
             else:
                 self.id = None
 
-        if isinstance(label, basestring):
-            self.label = Label(label)
-        else:
-            self.label = label
-        if isinstance(wrapper, basestring):
-            self.wrapper = Label(wrapper)
-        else:
-            self.wrapper = wrapper
+        self._label = label
+
         self.attributes = kwargs
 
     @property
@@ -49,19 +41,38 @@ class Text(object):
         else:
             self._id = value
 
+    @property
+    def label(self):
+        """Return a ``<label>`` tag for use with the field."""
+        if not self._label:
+            raise ValueError('No label set.')
+        return Tag('label', for_=self.id, content=self._label)
+
+    @property
+    def wrapper(self):
+        """Return a ``<label>`` tag with the field inside."""
+        return self._wrapper('left')
+
+    @property
+    def right_wrapper(self):
+        """Same as ``wrapper``, but the text is to the right of the field."""
+        return self._wrapper('right')
+
+    def _wrapper(self, align):
+        if not self._label:
+            raise ValueError('No label set.')
+        if align == 'left':
+            content = [ self._label, ' ', self ]
+        else:
+            content = [ self, ' ', self._label ]
+        return Tag('label', for_=self.id, content=content)
+
+
     def prerender(self):
         """Return a Tag or TagContent object."""
         tag = Tag('input', type_='text', name=self.name, value=self.value,
                 id=self.id)
         tag.set_attributes(self.attributes)
-        if self.label:
-            if self.label.align == 'left':
-                args = [self.label.label(self), ' ', tag]
-            else:
-                args = [tag, ' ', self.label.label(self)]
-            tag = TagContent(*args)
-        if self.wrapper:
-            tag = self.wrapper.wrap(tag, self)
         return tag
 
     def render(self):

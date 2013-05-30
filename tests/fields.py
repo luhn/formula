@@ -1,5 +1,5 @@
 import unittest
-from formula import Text, Label
+from formula import Text
 from bs4 import BeautifulSoup
 
 class TestFields(unittest.TestCase):
@@ -47,35 +47,28 @@ class TestFields(unittest.TestCase):
         self.assertEqual(soup.input['id'], 'email_3')
         self.assertEqual(tag.id, 'email_3')
 
-    def test_with_label(self):
+    def test_label(self):
         tag = Text('email', label='Email')
-        soup = BeautifulSoup(tag.render())
+        soup = BeautifulSoup(tag.label.render())
+        self.assertEqual(soup.label['for'], tag.id)
         self.assertEqual(soup.label.get_text(), 'Email')
-        self.assertEqual(soup.label.input, None)
-        self.assertEqual(soup.input['name'], 'email')
-
-    def test_with_label_align_right(self):
-        #I can't figure out how to make sure the label is on the right with
-        #BS4, so I'm just going to assume the code works correctly.
-        tag = Text('email', label=Label('Email', align='right'))
-        soup = BeautifulSoup(tag.render())
-        self.assertEqual(soup.label.get_text(), 'Email')
-        self.assertEqual(soup.label.input, None)
-        self.assertEqual(soup.input['name'], 'email')
 
     def test_with_wrapper(self):
-        tag = Text('email', wrapper='Email')
-        soup = BeautifulSoup(tag.render())
+        tag = Text('email', label='Email')
+        soup = BeautifulSoup(tag.wrapper.render())
         self.assertEqual(soup.label.get_text(), 'Email ')
         self.assertEqual(soup.label.input['name'], 'email')
 
     def test_with_wrapper_align_right(self):
-        tag = Text('email', wrapper=Label('Email', align='right'))
-        soup = BeautifulSoup(tag.render())
+        tag = Text('email', label='Email')
+        soup = BeautifulSoup(tag.right_wrapper.render())
         self.assertEqual(soup.label.get_text(), ' Email')
         self.assertEqual(soup.label.input['name'], 'email')
 
-    def test_label_align_exception(self):
+    def test_with_no_label(self):
+        tag = Text('email')
         with self.assertRaises(ValueError):
-            Label('Email', align='center')
+            tag.label.render()
+        with self.assertRaises(ValueError):
+            tag.wrapper.render()
 
