@@ -11,6 +11,7 @@ if __name__ == '__main__':
 
     from html import TestHtmlClasses
     from fields import TestFields
+    from rules import TestRules
 
     unittest.main()
 
